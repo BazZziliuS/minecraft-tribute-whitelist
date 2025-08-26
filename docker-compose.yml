@@ -1,0 +1,55 @@
+version: "3.9"
+
+services:
+  folia:
+    tty: true
+    stdin_open: true
+    image: itzg/minecraft-server:java24
+    restart: unless-stopped
+    ports:
+      - "25565:25565"
+      - "25565:25565/udp"
+      - "25575:25575"   # 👈 открываем порт для RCON
+    environment:
+      EULA: "TRUE"
+      TYPE: "FOLIA"
+      VERSION: "1.21.8"
+      MEMORY: "4G"
+      JVM_XX_OPTS: "-XX:MaxRAMPercentage=75"
+      ONLINE_MODE: "FALSE"
+      MAX_PLAYERS: 300
+      SERVER_NAME: "Cloudea.org | Minecraft"
+      MOTD: "§aДобро пожаловать на Cloudea!"
+      DIFFICULTY: "normal"
+      VIEW_DISTANCE: 8
+      SIMULATION_DISTANCE: 6
+
+      # 🔹 RCON
+      ENABLE_RCON: "true"
+      RCON_PASSWORD: "super_secret_passz"
+      RCON_PORT: 25575
+
+      # 🔹 Авто-бэкапы
+      ENABLE_AUTOBACKUP: "true"
+      AUTOBACKUP_INTERVAL: "2h"
+      AUTOBACKUP_KEEP: "7d"
+      AUTOBACKUP_METHOD: "tar"
+    volumes:
+      - ./data:/data
+      - ./plugins:/data/plugins
+      - ./config:/data/config
+
+  backend:
+    build: ./backend
+    container_name: mc-backend
+    restart: unless-stopped
+    depends_on:
+      - folia
+    ports:
+      - "8000:8000"   # вебхуки Tribute сюда
+    environment:
+      RCON_HOST: "folia"
+      RCON_PORT: 25575
+      RCON_PASSWORD: "super_secret_passz"
+    volumes:
+      - ./logs:/logs   # сюда будут писаться success/errors
