@@ -12,6 +12,9 @@ LOG_DIR = "/logs"
 SUCCESS_LOG = os.path.join(LOG_DIR, "whitelist_success.log")
 ERROR_LOG = os.path.join(LOG_DIR, "whitelist_errors.log")
 
+# 🔹 Название доната, по которому разрешено добавление в whitelist
+ALLOWED_DONATION_NAME = os.getenv("ALLOWED_DONATION_NAME", "Whitelist доступ")
+
 app = FastAPI()
 
 
@@ -21,6 +24,12 @@ async def webhook(request: Request):
     event_name = data.get("name")
     payload = data.get("payload", {})
     message = payload.get("message", "")
+    donation_name = payload.get("donation_name", "")
+
+    # Проверяем, что донат с нужным названием
+    if donation_name != ALLOWED_DONATION_NAME:
+        log_error("WRONG_DONATION", f"{event_name} → donation_name={donation_name}")
+        return {"status": "ignored", "reason": "donation_name mismatch"}
 
     if event_name in ["new_donation", "recurrent_donation"]:
         nickname = extract_nickname(message)
@@ -44,7 +53,6 @@ async def webhook(request: Request):
 
 
 def extract_nickname(message: str) -> str | None:
-    # допустим, ник состоит из латиницы, цифр и "_"
     match = re.search(r"([A-Za-z0-9_]{3,16})", message)
     return match.group(1) if match else None
 

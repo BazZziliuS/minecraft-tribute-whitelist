@@ -49,5 +49,6 @@ services:
       RCON_HOST: "folia"
       RCON_PORT: 25575
       RCON_PASSWORD: "super_secret_passz"
+      ALLOWED_DONATION_NAME: "Whitelist доступ"
     volumes:
       - ./logs:/logs   # сюда будут писаться success/errors

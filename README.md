@@ -9,7 +9,7 @@
 
 2. **Backend (FastAPI)**  
    - Принимает вебхуки от Tribute  
-   - Парсит ник из комментария к донату  
+   - Парсит ник из комментария к донату и название доната
    - Через RCON добавляет игрока в whitelist  
    - Ведёт логи успешных и ошибочных добавлений
 
@@ -19,8 +19,8 @@
 
 ### 1. Клонировать проект
 ```bash
-git clone https://github.com/yourname/mc-donation-whitelist.git
-cd mc-donation-whitelist
+git clone https://github.com/BazZziliuS/minecraft-tribute-whitelist.git
+cd minecraft-tribute-whitelist
 ````
 
 ### 2. Структура проекта
@@ -110,6 +110,7 @@ RCON_PORT: 25575
 RCON_HOST: "folia-1"
 RCON_PORT: 25575
 RCON_PASSWORD: "super_secret_pass"
+ALLOWED_DONATION_NAME: "Whitelist доступ"
 ```
 
 ---
