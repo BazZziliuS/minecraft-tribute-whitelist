@@ -7,7 +7,7 @@ services:
     ports:
       - "25565:25565"
       - "25565:25565/udp"
-      - "25575:25575"   # 👈 открываем порт для RCON
+      - "25575:25575"
     environment:
       EULA: "TRUE"
       TYPE: "FOLIA"
@@ -24,7 +24,7 @@ services:
 
       # 🔹 RCON
       ENABLE_RCON: "true"
-      RCON_PASSWORD: "super_secret_passz"
+      RCON_PASSWORD: "super_secret_pass"
       RCON_PORT: 25575
 
       # 🔹 Авто-бэкапы
@@ -39,18 +39,17 @@ services:
 
   backend:
     build: ./backend
-    container_name: mc-backend
     restart: unless-stopped
     depends_on:
       - folia
     ports:
-      - "8000:8000"   # вебхуки Tribute сюда
+      - "8000:8000"
     environment:
       RCON_HOST: "folia"
       RCON_PORT: 25575
-      RCON_PASSWORD: "super_secret_passz"
+      RCON_PASSWORD: "super_secret_pass"
       ALLOWED_DONATION_NAME: "Whitelist доступ"
       DONATE_CURRENCY: "EUR"
       DONATE_AMOUNT: 1
     volumes:
-      - ./logs:/logs   # сюда будут писаться success/errors
+      - ./logs:/logs

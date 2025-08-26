@@ -14,8 +14,8 @@ ERROR_LOG = os.path.join(LOG_DIR, "whitelist_errors.log")
 
 # 🔹 Название доната, по которому разрешено добавление в whitelist
 ALLOWED_DONATION_NAME = os.getenv("ALLOWED_DONATION_NAME", "Whitelist доступ")
-DONATE_AMOUNT = os.getenv("DONATE_AMOUNT", 1)
-DONATE_CURRENCY = os.getenv("DONATE_CURRENCY", "EUR")
+DONATE_AMOUNT = os.getenv("DONATE_AMOUNT", 0)
+DONATE_CURRENCY = os.getenv("DONATE_CURRENCY")
 
 app = FastAPI()
 
