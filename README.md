@@ -1,6 +1,3 @@
-## 📄 README.md
-
-````markdown
 # 🚀 Minecraft Donation Whitelist (Folia + Tribute Webhook)
 
 Этот проект поднимает два контейнера:
