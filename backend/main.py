@@ -14,6 +14,8 @@ ERROR_LOG = os.path.join(LOG_DIR, "whitelist_errors.log")
 
 # 🔹 Название доната, по которому разрешено добавление в whitelist
 ALLOWED_DONATION_NAME = os.getenv("ALLOWED_DONATION_NAME", "Whitelist доступ")
+DONATE_AMOUNT = os.getenv("DONATE_AMOUNT", 1)
+DONATE_CURRENCY = os.getenv("DONATE_CURRENCY", "EUR")
 
 app = FastAPI()
 
@@ -25,9 +27,11 @@ async def webhook(request: Request):
     payload = data.get("payload", {})
     message = payload.get("message", "")
     donation_name = payload.get("donation_name", "")
+    amount = payload.get("amount", "")
+    currency = payload.get("currency", "")
 
     # Проверяем, что донат с нужным названием
-    if donation_name != ALLOWED_DONATION_NAME:
+    if donation_name != ALLOWED_DONATION_NAME and amount >= DONATE_AMOUNT and DONATE_CURRENCY == currency:
         log_error("WRONG_DONATION", f"{event_name} → donation_name={donation_name}")
         return {"status": "ignored", "reason": "donation_name mismatch"}
 

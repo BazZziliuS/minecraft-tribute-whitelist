@@ -50,5 +50,7 @@ services:
       RCON_PORT: 25575
       RCON_PASSWORD: "super_secret_passz"
       ALLOWED_DONATION_NAME: "Whitelist доступ"
+      DONATE_CURRENCY: "EUR"
+      DONATE_AMOUNT: 1
     volumes:
       - ./logs:/logs   # сюда будут писаться success/errors

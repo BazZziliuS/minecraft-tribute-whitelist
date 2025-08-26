@@ -96,7 +96,7 @@ whitelist add Player123
 
 Все переменные задаются в `docker-compose.yml`:
 
-### Minecraft (folia-1)
+### Minecraft (folia)
 
 ```yaml
 ENABLE_RCON: "true"
@@ -107,10 +107,12 @@ RCON_PORT: 25575
 ### Backend
 
 ```yaml
-RCON_HOST: "folia-1"
+RCON_HOST: "folia"
 RCON_PORT: 25575
 RCON_PASSWORD: "super_secret_pass"
 ALLOWED_DONATION_NAME: "Whitelist доступ"
+DONATE_CURRENCY: "EUR"
+DONATE_AMOUNT: 1
 ```
 
 ---
